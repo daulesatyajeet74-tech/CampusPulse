@@ -97,6 +97,7 @@ export default function App() {
       {demo && <div className="banner">Demo preview: fictional sample data, nothing is saved. Add your Supabase keys to use the real database.</div>}
       <main>
         {view === 'report' ? <ReportForm onSubmit={add} onCancel={() => setView('dash')} /> : (<>
+          <section className="hero"><h1>Your campus, your voice.</h1><p>Report problems, see what is being fixed, and watch campus life get better.</p></section>
           <section className="stats">{stats.map(([l, n, c]) => <div key={l} className={`card stat ${c}`}><span>{l}</span><strong>{loading ? '–' : n}</strong></div>)}</section>
           <section className="card">
             <div className="filters">
@@ -108,7 +109,7 @@ export default function App() {
             {error && <div className="alert err" role="alert">{error} <button className="link" onClick={load}>Retry</button></div>}
             {loading ? <p className="empty">Loading issues…</p> : !error && shown.length === 0 ? <p className="empty">{issues.length ? 'No issues match your filters.' : 'No issues reported yet. Be the first to report one!'}</p> :
               <ul className="list">{shown.map(i => (
-                <li key={i.id} className="issue">
+                <li key={i.id} className={`issue p-${i.priority}`}>
                   <div className="main"><b>{i.title}</b><small>{i.category} · {i.location} · {fmt(i.created_at)}</small><small className="why">Priority: {i.priority_reason}</small></div>
                   <div className="meta"><Badge v={i.priority} /><Badge v={i.status} /></div>
                   {staff ? <div className="ctl">
